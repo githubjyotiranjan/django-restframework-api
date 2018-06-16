@@ -30,9 +30,7 @@ class UserDetailsAPIView(APIView):
 
     serializer_class = UserLoginSerializer
     def get(self, request, format=None):
-        """
-        Return a list of all users.
-        """
+        
 
         usernames = [user.username for user in User.objects.all()]
         return Response(usernames)
