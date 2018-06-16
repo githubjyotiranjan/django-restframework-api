@@ -22,5 +22,5 @@ from accounts import views
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    url(r'api/login/',include('accounts.urls', namespace='accounts')),
+    url(r'api/',include('accounts.urls', namespace='accounts')),
 ]
