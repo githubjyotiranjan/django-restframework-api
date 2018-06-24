@@ -19,8 +19,11 @@ from django.contrib import admin
 from django.conf.urls import url
 from django.conf.urls import include
 from accounts import views
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     url('admin/', admin.site.urls),
+    url(r'^api/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    url(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
     url(r'api/',include('accounts.urls', namespace='accounts')),
 ]

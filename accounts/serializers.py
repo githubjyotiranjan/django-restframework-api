@@ -2,8 +2,9 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.db.models import Q
-
+#
 class UserLoginSerializer(serializers.ModelSerializer):
 
     token = serializers.CharField(required=False, allow_blank=True, read_only=True)
@@ -35,8 +36,34 @@ class UserLoginSerializer(serializers.ModelSerializer):
         if user_obj:
             if not user_obj.check_password(password):
                 raise ValidationError("Incorrect credential please try again")
-        data["tokern"] = "Token"
+        data["user"] = user_obj
         return data
+
+
+# class UserLoginSerializer(serializers.Serializer):
+#
+#     username = serializers.CharField(required=False, allow_blank=True)
+#     password = serializers.CharField(style={'input_type': 'password'})
+#
+#
+#     def validate(self, data):
+#         user_obj = None
+#         username = data.get("username", None)
+#         password = data["password"]
+#         if not username:
+#             raise ValidationError("A username is required to login")
+#         user = authenticate(username='username', password='password')
+#         print(user)
+#         if user is not None:
+#             if user.is_active:
+#                 data['user'] = user
+#             else:
+#                 msg = "Account is not active"
+#         else:
+#             msg = "Invalid crediential"
+#             raise ValidationError(msg)
+#         return data
+
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
